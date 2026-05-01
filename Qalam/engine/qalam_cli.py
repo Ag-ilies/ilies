@@ -5,6 +5,35 @@ Qalam CLI - Command Line Interface
 import argparse
 import sys
 import os
+import io
+
+# Fix Windows encoding issues for emoji support
+def setup_encoding():
+    """Force UTF-8 encoding for stdout/stderr on all platforms"""
+    try:
+        # Try to set UTF-8 for stdout/stderr
+        if sys.platform == 'win32':
+            # Windows specific: use unicode console if available
+            try:
+                import ctypes
+                kernel32 = ctypes.windll.kernel32
+                kernel32.SetConsoleOutputCP(65001)  # UTF-8
+            except:
+                pass
+        
+        # Wrap stdout/stderr with UTF-8 encoder
+        if not isinstance(sys.stdout, io.TextIOWrapper):
+            sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
+        if not isinstance(sys.stderr, io.TextIOWrapper):
+            sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8', errors='replace')
+            
+        # Also set environment variable for subprocess calls
+        os.environ['PYTHONIOENCODING'] = 'utf-8'
+    except Exception:
+        # If all fails, just continue without emoji support
+        pass
+
+setup_encoding()
 
 # Add parent directory to path for imports
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -35,13 +64,16 @@ def cmd_build(args):
         print(f"✗ Parse error: {e}")
         sys.exit(1)
     
-    # Determine output format
+    # Determine output format and base name from input file
     output_format = args.output or 'both'
-    base_name = os.path.splitext(input_file)[0]
+    base_name = os.path.splitext(os.path.basename(input_file))[0]
+    output_dir = os.path.dirname(os.path.abspath(input_file))
+    if not output_dir:
+        output_dir = '.'
     
     # Build PDF
     if output_format in ['pdf', 'both']:
-        pdf_path = f"{base_name}.pdf"
+        pdf_path = os.path.join(output_dir, f"{base_name}.pdf")
         try:
             render_pdf(ast, pdf_path)
             print(f"✓ PDF generated: {pdf_path}")
@@ -52,7 +84,7 @@ def cmd_build(args):
     
     # Build Word
     if output_format in ['word', 'docx', 'both']:
-        docx_path = f"{base_name}.docx"
+        docx_path = os.path.join(output_dir, f"{base_name}.docx")
         try:
             render_docx(ast, docx_path)
             print(f"✓ Word document generated: {docx_path}")
