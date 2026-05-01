@@ -25,11 +25,11 @@ export default function RootLayout({
               </div>
               
               <div className="hidden md:flex items-center gap-8">
-                <a href="#features" className="hover:text-gold transition-colors">المميزات</a>
-                <a href="#docs" className="hover:text-gold transition-colors">التوثيق</a>
-                <a href="#editor" className="hover:text-gold transition-colors">المحرر</a>
-                <a href="#templates" className="hover:text-gold transition-colors">القوالب</a>
-                <a href="#pricing" className="hover:text-gold transition-colors">الأسعار</a>
+                <a href="/#features" className="hover:text-gold transition-colors">المميزات</a>
+                <a href="/docs" className="hover:text-gold transition-colors">التوثيق</a>
+                <a href="/editor" className="hover:text-gold transition-colors">المحرر</a>
+                <a href="/templates" className="hover:text-gold transition-colors">القوالب</a>
+                <a href="/pricing" className="hover:text-gold transition-colors">الأسعار</a>
               </div>
               
               <div className="flex items-center gap-4">
@@ -62,16 +62,16 @@ export default function RootLayout({
             <div>
               <h4 className="font-bold mb-4">روابط سريعة</h4>
               <ul className="space-y-2 text-gray-400">
-                <li><a href="#" className="hover:text-gold">التوثيق</a></li>
-                <li><a href="#" className="hover:text-gold">الأمثلة</a></li>
-                <li><a href="#" className="hover:text-gold">المدونة</a></li>
+                <li><a href="/docs" className="hover:text-gold">التوثيق</a></li>
+                <li><a href="/editor" className="hover:text-gold">المحرر</a></li>
+                <li><a href="/blog" className="hover:text-gold">المدونة</a></li>
               </ul>
             </div>
             
             <div>
               <h4 className="font-bold mb-4">المجتمع</h4>
               <ul className="space-y-2 text-gray-400">
-                <li><a href="#" className="hover:text-gold">GitHub</a></li>
+                <li><a href="https://github.com/qalam-lang" target="_blank" rel="noopener noreferrer" className="hover:text-gold">GitHub</a></li>
                 <li><a href="#" className="hover:text-gold">Discord</a></li>
                 <li><a href="#" className="hover:text-gold">Twitter</a></li>
               </ul>

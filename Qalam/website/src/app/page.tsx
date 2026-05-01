@@ -213,7 +213,7 @@ export default function Home() {
               
               <div className="flex items-start gap-4">
                 <div className="w-10 h-10 rounded-lg bg-gold/20 flex items-center justify-center flex-shrink-0">
-                  <span className="text-gold text-xl">{{}}</span>
+                  <span className="text-gold text-xl">{{`{{}}`}}</span>
                 </div>
                 <div>
                   <h4 className="text-xl font-bold mb-2">بيئات غنية</h4>
